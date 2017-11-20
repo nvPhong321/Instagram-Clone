@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.phong.instagram"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-feature android:name="android.hardware.camera2.flash" android:required="false" />
+
+    <application
+        tools:replace="android:allowBackup,android:icon"
+        android:screenOrientation="portrait"
+        android:largeHeap="true"
+        android:allowBackup="false"
+        android:hardwareAccelerated="false"
+        android:launchMode= "singleInstance"
+        android:icon="@mipmap/logo_insta"
+        android:label="@string/app_name"
+        android:windowSoftInputMode="adjustPan"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name=".Home.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Register.RegisterActivity"/>
+        <activity
+            android:name=".Login.LoginActivity"/>
+        <activity
+            android:name=".Search.SearchActivity"/>
+        <activity
+            android:name=".Like.LikeActivity"/>
+        <activity
+            android:name=".Profile.ProfileActivity"/>
+        <activity
+            android:name=".Share.ShareActivity"/>
+        <activity
+            android:name=".Share.NextActivity"/>
+        <activity
+            android:name=".Profile.AccountSettingActivity"/>
+        <activity
+            android:name=".Profile.ViewPostActivity"/>
+        <activity
+            android:name=".Profile.ViewCommentActivity"/>
+        <activity
+            android:name=".Profile.ViewProfileActivity"/>
+    </application>
+
+</manifest>
