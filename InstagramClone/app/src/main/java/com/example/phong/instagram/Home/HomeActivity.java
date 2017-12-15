@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.example.phong.instagram.Adapter.MainFeedAdapter;
 import com.example.phong.instagram.Adapter.SectionPagerAdapter;
 import com.example.phong.instagram.Login.LoginActivity;
 import com.example.phong.instagram.R;
@@ -19,7 +20,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wang.avi.AVLoadingIndicatorView;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements MainFeedAdapter.OnLoadMoreItemlisteners{
+
+    @Override
+    public void onLoadMoreItem() {
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher" + R.id.container + ":" + viewPager.getCurrentItem());
+        if (fragment != null){
+            fragment.moredisplayPhotos();
+        }
+    }
 
     private static final String TAG = "HomeActivity";
     private static final int ACTIVITY_NUM = 0;
@@ -148,10 +157,5 @@ public class HomeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         finish();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 }

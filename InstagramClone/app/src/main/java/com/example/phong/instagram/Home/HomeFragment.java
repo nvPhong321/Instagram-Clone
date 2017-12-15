@@ -40,14 +40,17 @@ import static com.example.phong.instagram.Home.HomeActivity.viewPager;
  */
 
 public class HomeFragment extends Fragment {
+
     public TabLayout tabLayout;
     private BottomNavigationViewEx bottomNavigationViewEx;
     private static final int ACTIVITY_NUM = 0;
 
+    private ArrayList<Photo> mPagination;
     private ArrayList<Photo> mPhoto;
     private ArrayList<String> mFollowing;
     private RecyclerView rcMainFeed;
     private MainFeedAdapter adapter;
+    private int mResult;
 
 
     @Nullable
@@ -153,17 +156,65 @@ public class HomeFragment extends Fragment {
     }
 
     private void displayPhotos(){
+        mPagination = new ArrayList<>();
+
         if(mPhoto != null){
-            Collections.sort(mPhoto, new Ordering<Photo>() {
-                @Override
-                public int compare(Photo o1,Photo o2) {
-                    return o2.getDate_created().compareTo(o1.getDate_created());
+
+            try {
+
+                Collections.sort(mPhoto, new Ordering<Photo>() {
+                    @Override
+                    public int compare(Photo o1,Photo o2) {
+                        return o2.getDate_created().compareTo(o1.getDate_created());
+                    }
+                });
+
+                int interations = mPhoto.size();
+                if (interations > 10){
+                    interations = 10;
                 }
-            });
-            adapter = new MainFeedAdapter(mPhoto,getActivity());
-            rcMainFeed.setAdapter(adapter);
+                mResult = 0;
+                for (int i = 0 ; i < interations ; i++){
+                    mPagination.add(mPhoto.get(i));
+                }
+
+                adapter = new MainFeedAdapter(mPagination,getActivity());
+                rcMainFeed.setAdapter(adapter);
+
+            }catch (NullPointerException e){
+
+            }catch (IndexOutOfBoundsException e) {
+
+            }
         }
     }
+
+    public void moredisplayPhotos(){
+        try {
+
+            if(mPhoto.size() > mResult && mPhoto.size() > 0){
+                int interations;
+                if(mPhoto.size() > (mResult + 10)){
+                    interations = 10;
+                }else {
+                    interations = mPhoto.size() - mResult;
+                }
+
+                for(int i = mResult ; i < mResult ; i++){
+                    mPagination.add(mPhoto.get(i));
+                }
+                mResult = mResult + interations;
+                adapter.notifyDataSetChanged();
+            }
+
+        }catch (NullPointerException e){
+
+        }catch (IndexOutOfBoundsException e) {
+
+        }
+    }
+
+
     private void setupViewPaper(){
 
         tabLayout.setupWithViewPager(viewPager);

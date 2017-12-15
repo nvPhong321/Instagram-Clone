@@ -56,6 +56,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.RecyclerViewHolder> {
 
+    public interface OnLoadMoreItemlisteners{
+        void onLoadMoreItem();
+    }
+
+    OnLoadMoreItemlisteners onLoadMoreItemlisteners;
 
     private static final String TAG = "MainFeedAdapter";
 
@@ -256,6 +261,10 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.Recycl
 
             }
         });
+
+        if(reachedEndOfList(position)){
+            loadData();
+        }
     }
 
     public Photo getItem(int position) {
@@ -322,7 +331,23 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.Recycl
 
     }
 
+    private boolean reachedEndOfList(int position){
+         return position == getItemCount() - 1;
+    }
 
+    private void loadData(){
+        try{
+
+        }catch (ClassCastException e){
+            onLoadMoreItemlisteners = (OnLoadMoreItemlisteners) mContext;
+        }
+
+        try{
+
+        }catch (NullPointerException e){
+            onLoadMoreItemlisteners = (OnLoadMoreItemlisteners) mContext;
+        }
+    }
 
     private void Like(final RecyclerViewHolder mHolder){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
